@@ -112,7 +112,13 @@ do
     start_and_enable_service $s
 done
 
-start_and_enable_service iscsid
+# iscsid fails to start with a "can not create NETLINK_ISCSI socket" so it's
+# not prudent to check its status using `systemctl is-active --quiet
+# iscsid.service` that may return 0 if it runs early enough after `systemctl
+# start icscid`
+#start_and_enable_service iscsid
+systemctl enable iscsid
+systemctl start iscsid
 
 
 # Set up the database
